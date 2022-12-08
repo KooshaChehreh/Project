@@ -2,8 +2,8 @@ from django.db import models
 
 from django.db import models
 from django.contrib.auth.models import models
-from PhoneService.core.models import BaseModel
-from PhoneService.user.models import User
+from core.models import BaseModel
+from user.models import User
 
 
 class Product(BaseModel):
@@ -12,7 +12,7 @@ class Product(BaseModel):
     guarantee_code = models.BigIntegerField(null=False, blank=False)
     guarantee_start_date = models.DateTimeField(auto_now_add=True)
     guarantee_end_date = models.DateTimeField()
-    image = models.ImageField(upload_to='/products')
+    image = models.ImageField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -3,9 +3,9 @@ from django.db import models
 
 from django.db import models
 from django.contrib.auth.models import models
-from PhoneService.core.models import BaseModel
-from PhoneService.user.models import User
-from PhoneService.product.models import ProductService, Product
+from core.models import BaseModel
+from user.models import User
+from product.models import ProductService, Product
 
 
 class Station(BaseModel):
