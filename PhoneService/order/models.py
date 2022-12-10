@@ -1,7 +1,3 @@
-from django.db import models
-
-
-from django.db import models
 from django.contrib.auth.models import models
 from core.models import BaseModel
 from user.models import User
@@ -9,10 +5,12 @@ from product.models import ProductService, Product
 
 
 class Station(BaseModel):
-    name = models.CharField(max_length=200)
-    boss = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True, null=False)
+    boss = models.CharField(max_length=200, null=True)
     latitude = models.IntegerField()
     longitude = models.IntegerField()
+    city = models.CharField(max_length=100)
+    district = models.IntegerField()
 
     def __str__(self):
         return f'{self.name} station!'

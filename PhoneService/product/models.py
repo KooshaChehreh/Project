@@ -39,8 +39,8 @@ class ServiceDiscount(BaseModel):
 
 
 class ProductService(BaseModel):
-    service_name = models.CharField(max_length=100)
-    description = models.TextField()
+    service_name = models.CharField(max_length=100, null=False)
+    description = models.TextField(null=True)
     guarantee_support = models.BooleanField(null=False, blank=False)
     discount = models.OneToOneField(ServiceDiscount, on_delete=models.CASCADE, null=True)
 
