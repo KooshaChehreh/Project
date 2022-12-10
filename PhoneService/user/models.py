@@ -1,12 +1,10 @@
 from django.db import models
-
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 from core.models import BaseModel
 
 
-class User(AbstractBaseUser):
-    username = models.CharField(max_length=100)
+class User(AbstractUser):
+    username = models.CharField(max_length=100, unique=True, primary_key=True)
     password = models.CharField(max_length=100)
     is_staff = models.BooleanField()
 
@@ -17,20 +15,20 @@ class User(AbstractBaseUser):
 class Profile(BaseModel):
     phone = models.CharField(max_length=14, unique=True, null=False, blank=False)
     email = models.EmailField(unique=True, null=False, blank=False)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
     image = models.ImageField(null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        return f'{self.user.first_name} {self.user.last_name}'
 
 
 class Address(BaseModel):
     latitude = models.IntegerField(null=False, blank=False)
     longitude = models.IntegerField(null=False, blank=False)
-    description = models.TextField()
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    city = models.CharField(max_length=100)
+    district = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='address')
 
     class Meta:
         verbose_name_plural = 'Addresses'

@@ -19,13 +19,13 @@ class Station(BaseModel):
 
 
 class Order(BaseModel):
-    STATUS = [('D', 'Done'), ('W', 'Waiting')]
-    status = models.CharField(max_length=1, choices=STATUS)
+    STATUS = [('A', 'Accepted'), ('W', 'Waiting'), ('R', 'Rejected')]
+    status = models.CharField(max_length=1, choices=STATUS, default='W')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     station = models.ForeignKey(Station, on_delete=models.CASCADE)
 
-    # def __str__(self):
-    #     return f'{self.User.username}{self.status}'
+    def __str__(self):
+        return f'{self.user.username}{self.status}-{self.station.name}'
 
 
 class OrderItems(BaseModel):
