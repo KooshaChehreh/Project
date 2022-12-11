@@ -75,8 +75,6 @@ class BaseModel(models.Model):
         help_text="This is active status",
     )
 
-    # todo: havaset bashe to front hame productaiio biar k true bashe is activesh
-
     def deleter(self, using=None, keep_parents=False):
         self.deleted_at = timezone.now()
         self.is_deleted = True
@@ -94,7 +92,6 @@ class BaseModel(models.Model):
     def activate(self):
         self.is_active = True
         self.save()
-
 
 # class UserCustomManager(UserManager):
 #     def create_superuser(self, username, email=None, password=None, **extra_fields):
