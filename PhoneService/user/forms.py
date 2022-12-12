@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import User, Profile, Address
+from .validators import validate_phone
 
 
 class UserForm(UserCreationForm):
@@ -20,3 +21,20 @@ class UserForm(UserCreationForm):
             raise forms.ValidationError(
                 "passwords does not match"
             )
+
+
+class OtpForm(forms.Form):
+    otp_code = forms.IntegerField(label='Enter your code please', required=True)
+
+
+class ProfileForm(forms.Form):
+    phone = forms.IntegerField(validators=['validate_phone', ], required=True)
+    email = forms.EmailField(required=True)
+    image = forms.ImageField()
+
+
+class AddressForm(forms.Form):
+    city = forms.CharField()
+    district = forms.IntegerField()
+    description = forms.CharField(widget=forms.Textarea)
+
