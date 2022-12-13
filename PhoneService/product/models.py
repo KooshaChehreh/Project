@@ -12,7 +12,7 @@ class Product(BaseModel):
                                    primary_key=True, null=False, blank=False)
     brand = models.CharField(max_length=100, null=False, blank=False)
     model = models.CharField(max_length=100, null=False, blank=False)
-    image = models.ImageField(null=True)
+    image = models.ImageField(null=True, upload_to='product/%Y/%m/%d')
 
     def __str__(self):
         return f'{self.brand} ({self.model})'

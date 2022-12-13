@@ -16,7 +16,7 @@ class User(AbstractUser):
 class Profile(BaseModel):
     phone = models.CharField(max_length=14, unique=True, null=False, blank=False, validators=[validate_phone, ])
     email = models.EmailField(unique=True, null=False, blank=False)
-    image = models.ImageField(null=True)
+    image = models.ImageField(null=True, upload_to='profile/%Y/%m/%d')
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 
     def __str__(self):
