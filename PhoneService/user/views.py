@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
-from .forms import UserForm, OtpForm
+from .forms import UserForm, OtpForm, LoginForm
 from .models import User
 from .utils import generateOTP
 from django.contrib import messages
@@ -58,4 +58,27 @@ class VerifyView(View):
         else:
             messages.error(request, 'Code field should be filled!')
             return redirect('VerifyView')
+
+
+class LoginView(View):
+    def get(self, request):
+        form = UserForm()
+        return render('login.html', {'form': form})
+
+    def post(self, request):
+        username = request.form['username']
+        password = request.form['password']
+        res = User.objects.get(username=username)
+        if res is None:
+            messages.error(request, 'Register first!')
+            return redirect('LoginView')
+        # elif res['suspend']:
+        #     pass
+        else:
+            if password == res.password:
+                login(request=request, user=res)
+                return redirect('HomeView')
+            else:
+                messages.error(request, 'Password is incorrect!')
+                return redirect('LoginView')
 

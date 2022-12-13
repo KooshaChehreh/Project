@@ -38,3 +38,7 @@ class AddressForm(forms.Form):
     district = forms.IntegerField()
     description = forms.CharField(widget=forms.Textarea)
 
+
+class LoginForm(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
