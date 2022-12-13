@@ -40,11 +40,11 @@ class HomeView(View):
 class VerifyView(View):
     def get(self, request):
         form = OtpForm()
-        print(form)
         return render(request, 'verify.html', {'form': form})
 
     def post(self, request):
         form = OtpForm(request.POST)
+        print(form.cleaned_data['otp_code'])
         if form.is_valid():
             code = request.session['verification_code']
             if code == form.cleaned_data['code']:
