@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from core.models import BaseModel
+from .validators import validate_phone
 
 
 class User(AbstractUser):
@@ -13,7 +14,7 @@ class User(AbstractUser):
 
 
 class Profile(BaseModel):
-    phone = models.CharField(max_length=14, unique=True, null=False, blank=False)
+    phone = models.CharField(max_length=14, unique=True, null=False, blank=False, validators=[validate_phone, ])
     email = models.EmailField(unique=True, null=False, blank=False)
     image = models.ImageField(null=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')

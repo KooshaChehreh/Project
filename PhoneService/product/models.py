@@ -4,6 +4,7 @@ from django.contrib.auth.models import models
 from core.models import BaseModel
 from user.models import User
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from .validatiors import validate_discount
 
 
 class Product(BaseModel):
@@ -30,7 +31,7 @@ class ProductGuarantee(BaseModel):
 
 class ServiceDiscount(BaseModel):
     name = models.CharField(max_length=200)
-    percent = models.IntegerField(blank=True)
+    percent = models.IntegerField(blank=True, validators=[validate_discount, ])
     amount = models.IntegerField(default=0)
     description = models.TextField()
 

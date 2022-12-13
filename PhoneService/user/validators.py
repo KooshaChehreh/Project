@@ -12,3 +12,6 @@ def validate_phone(value):
 
 def validate_image(file_name):
     pass
+
+
+
