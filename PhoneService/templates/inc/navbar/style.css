@@ -1,0 +1,35 @@
+#dropdownMenu1:hover{
+    color: white !important;
+    border-color: gray;
+}
+
+#dropdownMenu2:hover{
+    color: white !important;
+    border-color: gray;
+}
+
+#dropdownMenu3:hover{
+    color: white !important;
+    border-color: gray;
+}
+
+#dropdownMenu4:hover{
+    color: white !important;
+    border-color: gray;
+}
+
+#login:hover{
+    color: white !important;
+}
+
+#login {
+    text-decoration: none;
+}
+
+#register:hover{
+    color: white !important;
+}
+
+#register{
+    text-decoration: none;
+}

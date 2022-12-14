@@ -6,14 +6,16 @@
 
 </head>
 <body>
-    {% include 'inc/navbar.html'%}
+{% include 'inc/navbar/navbar.html' %}
+<div class="bg-secondary.bg-gradient">
     <div class="">
-        {% include 'inc/navbar.html'%}
+        {% include 'inc/messages/messages.html' %}
         {% block content %}
         {% endblock %}
-
     </div>
+</div>
 
 
 </body>
 </html>
+
