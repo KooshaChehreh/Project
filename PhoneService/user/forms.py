@@ -10,7 +10,7 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'Staff member')
+        fields = ('username', 'password1', 'password2', 'is_staff')
 
     def clean(self):
         cleaned_data = super(UserForm, self).clean()

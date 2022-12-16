@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/landing-css.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<div class="bg-image">
+
+</div>
+<div class="d-flex justify-content-around">
+    <div class="bg-text">
+        <img src="{% static 'user/images/Cell-Phone-LCD-Repair.jpg' %}" class="img-fluid" alt="Responsive image">
+        <h5 class="m-3">Complete LCD Repair Solutions</h5>
+        <p class="font-weight-light text-right">
+            Polarizer & Backlight Replacment, Tab Bonding, Enhancement Solutions and Board Level Repair Services
+        </p>
+{#        <img src="{% static 'css/bg.jpg' %}" alt="" class="" style="height: 100px; width: 100px">#}
+    </div>
+    <div class="why">
+        <h5>Why GuarantMee: </h5>
+        <ul class="mylist">
+            <li class="items">
+                More Than 500 active users!
+            </li>
+            <li class="items">
+                Five active branches in Tehran.
+            </li>
+            <li class="items">
+                The most accomplished mechanics.
+            </li>
+            <li class="items">
+                We won the honor of the best Guarantee in last 2 years.
+            </li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,27 +1,27 @@
-/*body, html {*/
-/*  height: 100%;*/
-/*}*/
+body, html {
+  height: 100%;
+}
 
-/** {*/
-/*  box-sizing: border-box;*/
-/*}*/
+* {
+  box-sizing: border-box;
+}
 
-/*.bg-image {*/
-/*  !* The image used *!*/
-/*  background-image: url("bg.jpg");*/
+.bg-image {
+  /* The image used */
+  background-image: url("../user/images/bg.jpg");
 
-/*  !* Add the blur effect *!*/
-/*  filter: blur(6px);*/
-/*  -webkit-filter: blur(6px);*/
+  /* Add the blur effect */
+  filter: blur(6px);
+  -webkit-filter: blur(6px);
 
-/*  !* Full height *!*/
-/*  height: 100%;*/
+  /* Full height */
+  height: 100%;
 
-/*  !* Center and scale the image nicely *!*/
-/*  background-position: center;*/
-/*  background-repeat: no-repeat;*/
-/*  background-size: cover;*/
-/*}*/
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 /* Position text in the middle of the page/image */
 .bg-text {

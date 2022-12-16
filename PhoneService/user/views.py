@@ -8,14 +8,14 @@ from django.contrib import messages
 from django.contrib.auth import login
 
 
-class RegisterUser(View):
+class RegisterView(View):
     def get(self, request):
         form = UserForm()
         return render(request, 'register.html', {"form": form})
 
     def post(self, request):
         if request.method == 'POST':
-            user = UserForm()
+            user = UserForm(request.POST)
             if user.is_valid():
                 request.session['verification_code'] = generateOTP()
                 request.session['user_info'] = {
@@ -26,12 +26,13 @@ class RegisterUser(View):
                 return redirect('verify')
             else:
                 messages.error(request, 'information should be completely filled')
-                UserForm()
+                form = UserForm()
+                return render(request, 'register.html', {"form": form})
 
 
 class HomeView(View):
     def get(self, request):
-        pass
+        return render(request, 'landing.html')
 
     def post(self, request):
         pass
@@ -63,7 +64,7 @@ class VerifyView(View):
 class LoginView(View):
     def get(self, request):
         form = UserForm()
-        return render('login.html', {'form': form})
+        return render(request, 'login.html', {'form': form})
 
     def post(self, request):
         username = request.form['username']
@@ -81,4 +82,3 @@ class LoginView(View):
             else:
                 messages.error(request, 'Password is incorrect!')
                 return redirect('LoginView')
-
