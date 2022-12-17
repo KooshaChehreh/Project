@@ -22,20 +22,20 @@
                         <div class="col-lg-10 col-xl-7 mx-auto">
                             <h5 class="display-6">Wellcome Back!</h5>
                             <p class="text-muted mb-4">Login to Guarantee your device or repair.</p>
-                            <form>
+                            <form method="post">{% csrf_token %}
                                 <div class="form-group mb-3">
-                                    <input id="inputEmail" value="" type="text" placeholder="Username" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    <p class="">{{ form.username }}</p>
                                 </div>
 
                                 <div class="form-group mb-3">
-                                    <input id="inputPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                     <p class="">{{ form.password }}</p>
                                 </div>
                                 <div class="custom-control custom-checkbox mb-3">
                                     <input id="customCheck1" type="checkbox" checked class="custom-control-input">
                                     <label for="customCheck1" class="custom-control-label">Remember me</label>
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login</button>
-                                <div class="text-center d-flex justify-content-between mt-4"><p>Don't have an account? <a href="#" class="font-italic text-muted">
+                                <div class="text-center d-flex justify-content-between mt-4"><p>Don't have an account? <a href="http://127.0.0.1:8000/user/register/" class="font-italic text-muted">
                                         <u>Sign Up</u></a></p></div>
                             </form>
                         </div>

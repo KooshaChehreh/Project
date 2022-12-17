@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Verify</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/verify.css' %}">
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+
+
+    <div class="verify" >
+        <div class="">
+            <div class="card text-center">
+                <div class="card-header font-weight-bold">
+                    We've sent you a code to {{ phone }}
+                </div>
+                <div class="card-body">
+                    <p> {{ form.otp_code }}</p>
+                    <button type="submit"
+                            class="btn btn-secondary btn-block text-uppercase m-2 rounded-pill shadow-sm">
+                        Submit
+                    </button>
+                    <a href="#" class="btn btn-secondary m-2 btn-block rounded-pill shadow-sm">Resend Code</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

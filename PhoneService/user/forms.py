@@ -5,12 +5,11 @@ from .models import User, Profile, Address
 from .validators import validate_phone
 
 
-class UserForm(UserCreationForm):
-    is_staff = forms.BooleanField()
-
-    class Meta:
-        model = User
-        fields = ('username', 'password1', 'password2', 'is_staff')
+class UserForm(forms.Form):
+    username = forms.CharField(label='username')
+    password = forms.CharField(label='password')
+    confirm_password = forms.CharField(label='Confirm Password')
+    phone = forms.IntegerField()
 
     def clean(self):
         cleaned_data = super(UserForm, self).clean()
@@ -21,6 +20,8 @@ class UserForm(UserCreationForm):
             raise forms.ValidationError(
                 "passwords does not match"
             )
+        else:
+            return True
 
 
 class OtpForm(forms.Form):
@@ -40,5 +41,5 @@ class AddressForm(forms.Form):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(required=True)
-    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    username = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), required=True, )

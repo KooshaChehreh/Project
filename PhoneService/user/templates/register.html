@@ -1,51 +1,57 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-        <link rel="stylesheet" href="{% static 'css/login-css.css' %}">
-  {% endblock %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
 
 {% block content %}
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <!-- The content half -->
+            <div class="col-md-6 bg-light">
+                <div class="login d-flex align-items-center py-5">
 
-
-
-
-        <!-- The content half -->
-        <div class="col-md-6 bg-light">
-            <div class="login d-flex align-items-center py-5">
-
-                <!-- Demo content-->
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-10 col-xl-7 mx-auto">
-                            <h5 class="display-6">Wellcome Back!</h5>
-                            <p class="text-muted mb-4">Login to Guarantee your device or repair.</p>
-                            <form>
-                                <div class="form-group mb-3">
-                                    <input id="inputEmail" value="" type="text" placeholder="Username" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                </div>
-
-                                <div class="form-group mb-3">
-                                    <input id="inputPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-                                </div>
-                                <div class="custom-control custom-checkbox mb-3">
-                                    <input id="customCheck1" type="checkbox" checked class="custom-control-input">
-                                    <label for="customCheck1" class="custom-control-label">Remember me</label>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Login</button>
-                                <div class="text-center d-flex justify-content-between mt-4"><p>Don't have an account? <a href="#" class="font-italic text-muted">
-                                        <u>Sign Up</u></a></p></div>
-                            </form>
+                    <!-- Demo content-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-10 col-xl-7 mx-auto">
+                                <h5 class="display-6">Create Account</h5>
+                                <p class="text-muted mb-4">You are so WelCome to our services.</p>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="form-group mb-3">
+                                        <p class=""> {{ form.username }}</p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p> {{ form.password }}</p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p class=""> {{ form.confirm_password }}</p>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <p class=""> {{ form.phone }}</p>
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-3">
+                                        <input id="customCheck1" type="checkbox" checked class="custom-control-input">
+                                        <label for="customCheck1" class="custom-control-label">Remember me</label>
+                                    </div>
+                                    <button type="submit"
+                                            class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+                                        Sign Up
+                                    </button>
+                                    <div class="text-center d-flex justify-content-between mt-4"><p>You have already an account? <a href="http://127.0.0.1:8000/user/" class="font-italic text-muted">
+                                            <u>Log in</u></a></p></div>
+                                </form>
+                            </div>
                         </div>
-                    </div>
-                </div><!-- End -->
+                    </div><!-- End -->
 
-            </div>
-        </div><!-- End -->
+                </div>
+            </div><!-- End -->
 
-<div class="container-fluid">
-    <div class="row no-gutter">
-        <!-- The image half -->
-        <div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+            <!-- The image half -->
+            <div class="col-md-6 d-none d-md-flex bg-image"></div>
+        </div>
     </div>
-</div>
 {% endblock %}

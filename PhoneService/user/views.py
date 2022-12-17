@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
 from .forms import UserForm, OtpForm, LoginForm
 from .models import User
@@ -14,20 +13,31 @@ class RegisterView(View):
         return render(request, 'register.html', {"form": form})
 
     def post(self, request):
-        if request.method == 'POST':
-            user = UserForm(request.POST)
-            if user.is_valid():
+        user = UserForm(request.POST)
+        if user.is_valid():
+            username = user['username']
+            try:
+                res = User.objects.get(username=username)
+            except User.DoesNotExist:
+                res = None
+            if res is not None:
+                messages.error(request, 'The username is not available for you!')
+                return redirect('register')
+            else:
                 request.session['verification_code'] = generateOTP()
                 request.session['user_info'] = {
-                    'username': user.cleaned_data['username'],
-                    'password': user.cleaned_data['password1'],
-                    'is_staff': user.cleaned_data['is_staff'],
+                    'username': user['username'].value(),
+                    'password': user['password'].value(),
+                    'phone': user['phone'].value(),
                 }
-                return redirect('verify')
-            else:
-                messages.error(request, 'information should be completely filled')
-                form = UserForm()
-                return render(request, 'register.html', {"form": form})
+                phone = user['phone'].value()
+                form = OtpForm()
+                return render(request, 'verify.html', {'phone': phone, 'form': form})
+        else:
+            print('Password does not match')
+            messages.error(request, 'Password does not match')
+            form = UserForm()
+            return render(request, 'register.html', {"form": form})
 
 
 class HomeView(View):
@@ -35,7 +45,7 @@ class HomeView(View):
         return render(request, 'landing.html')
 
     def post(self, request):
-        pass
+        return render(request, 'landing.html')
 
 
 class VerifyView(View):
@@ -63,16 +73,21 @@ class VerifyView(View):
 
 class LoginView(View):
     def get(self, request):
-        form = UserForm()
+        form = LoginForm()
         return render(request, 'login.html', {'form': form})
 
     def post(self, request):
-        username = request.form['username']
-        password = request.form['password']
-        res = User.objects.get(username=username)
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            res = User.objects.get(username=username)
+        except User.DoesNotExist:
+            res = None
         if res is None:
-            messages.error(request, 'Register first!')
-            return redirect('LoginView')
+            print('res is none')
+            messages.error(request, 'You do not have an account! Register please.')
+            print('wtf')
+            return redirect('login')
         # elif res['suspend']:
         #     pass
         else:
@@ -81,4 +96,4 @@ class LoginView(View):
                 return redirect('HomeView')
             else:
                 messages.error(request, 'Password is incorrect!')
-                return redirect('LoginView')
+                return redirect('login')
