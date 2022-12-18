@@ -8,6 +8,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=100, unique=True, primary_key=True)
     password = models.CharField(max_length=100)
     is_staff = models.BooleanField(default=False)
+    phone = models.CharField(max_length=100, validators=[validate_phone])
 
     def __str__(self):
         return self.username

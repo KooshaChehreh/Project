@@ -7,7 +7,7 @@
 */
 .login,
 .image {
-  min-height: 86.6vh;
+  min-height: 86.5vh;
 }
 
 .bg-image {
@@ -16,7 +16,7 @@
   background-position: center center;
 }
 
-#id_password {
+#id_password2 {
   border-radius: 25px 25px;
   background: aliceblue;
   padding: 20px;
@@ -24,7 +24,7 @@
   height: 45px;
 }
 
-#id_confirm_password {
+#id_password1 {
   border-radius: 25px 25px;
   background: aliceblue;
   padding: 20px;

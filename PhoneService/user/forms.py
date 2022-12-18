@@ -5,27 +5,28 @@ from .models import User, Profile, Address
 from .validators import validate_phone
 
 
-class UserForm(forms.Form):
-    username = forms.CharField(label='username')
-    password = forms.CharField(label='password')
-    confirm_password = forms.CharField(label='Confirm Password')
-    phone = forms.IntegerField()
+class UserForm(UserCreationForm):
+    phone = forms.CharField(validators=[validate_phone])
 
-    def clean(self):
-        cleaned_data = super(UserForm, self).clean()
-        password = cleaned_data.get("password")
-        confirm_password = cleaned_data.get("confirm_password")
+    class Meta:
+        model = User
+        fields = ('username', 'password1', 'password2', 'phone')
 
-        if password != confirm_password:
-            raise forms.ValidationError(
-                "passwords does not match"
-            )
-        else:
-            return True
+    # def clean(self):
+    #     cleaned_data = super(UserForm, self).clean()
+    #     password = cleaned_data.get("password")
+    #     confirm_password = cleaned_data.get("confirm_password")
+    #
+    #     if password != confirm_password:
+    #         raise forms.ValidationError(
+    #             "passwords does not match"
+    #         )
+    #     else:
+    #         return True
 
 
 class OtpForm(forms.Form):
-    otp_code = forms.IntegerField(label='Enter your code please', required=True)
+    otp_code = forms.IntegerField(required=True)
 
 
 class ProfileForm(forms.Form):

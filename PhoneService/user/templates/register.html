@@ -23,10 +23,10 @@
                                         <p class=""> {{ form.username }}</p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <p> {{ form.password }}</p>
+                                        <p> {{ form.password1 }}</p>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <p class=""> {{ form.confirm_password }}</p>
+                                        <p class=""> {{ form.password2 }}</p>
                                     </div>
                                     <div class="form-group mb-3">
                                         <p class=""> {{ form.phone }}</p>
@@ -36,12 +36,20 @@
                                         <label for="customCheck1" class="custom-control-label">Remember me</label>
                                     </div>
                                     <button type="submit"
-                                            class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">
+                                            class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm">
                                         Sign Up
                                     </button>
-                                    <div class="text-center d-flex justify-content-between mt-4"><p>You have already an account? <a href="http://127.0.0.1:8000/user/" class="font-italic text-muted">
+                                    <div class="text-center d-flex justify-content-between mt-4"><p>You have already an
+                                        account? <a href="http://127.0.0.1:8000/user/" class="font-italic text-muted">
                                             <u>Log in</u></a></p></div>
                                 </form>
+                                {% if error %}
+                                    {% for err in error %}
+                                            <div class="alert alert-danger">
+                                                <strong>{{ err|escape }}</strong>
+                                            </div>
+                                      {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                     </div><!-- End -->

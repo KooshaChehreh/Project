@@ -1,29 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/verify.css' %}">
+    <link rel="stylesheet" href="{% static 'css/logout.css' %}">
 {% endblock %}
 
 {% block content %}
 
 
-    <div class="verify" >
+    <div class="logout" >
         <div class="">
             <div class="card text-center">
                 <div class="card-header font-weight-bold">
-                    We've sent you a code to {{ request.session.user_info.phone }}
+                    Are you sure you want to log out?
                 </div>
                 <div class="card-body">
-                    <form action="" method="post" class="">
+                    <form action="" method="post" class="form">
                         {% csrf_token %}
-                    <p> {{ form.otp_code }}</p>
                     <button type="submit"
                             class="btn btn-secondary btn-block text-uppercase m-2 rounded-pill shadow-sm">
-                        Submit
+                        Log Out!
                     </button>
-                    <a href="#" class="btn btn-secondary m-2 btn-block rounded-pill shadow-sm">Resend Code</a>
                     </form>
-
                 </div>
             </div>
         </div>

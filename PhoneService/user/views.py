@@ -4,7 +4,7 @@ from .forms import UserForm, OtpForm, LoginForm
 from .models import User
 from .utils import generateOTP
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate, logout
 
 
 class RegisterView(View):
@@ -27,17 +27,24 @@ class RegisterView(View):
                 request.session['verification_code'] = generateOTP()
                 request.session['user_info'] = {
                     'username': user['username'].value(),
-                    'password': user['password'].value(),
+                    'password': user['password1'].value(),
                     'phone': user['phone'].value(),
                 }
-                phone = user['phone'].value()
-                form = OtpForm()
-                return render(request, 'verify.html', {'phone': phone, 'form': form})
+                print(request.session['verification_code'])
+                return redirect('verify')
         else:
-            print('Password does not match')
-            messages.error(request, 'Password does not match')
+            print(user.fields.keys())
+            err = []
+            for field in user.fields.items():
+                print(field)
+                for i in range(len(user.errors)):
+                    try:
+                        err.append(user.errors[f'{field[0]}'].as_data()[i])
+                    except Exception:
+                        pass
+            print(err)
             form = UserForm()
-            return render(request, 'register.html', {"form": form})
+            return render(request, 'register.html', {"form": form, 'error': err})
 
 
 class HomeView(View):
@@ -55,20 +62,23 @@ class VerifyView(View):
 
     def post(self, request):
         form = OtpForm(request.POST)
-        print(form.cleaned_data['otp_code'])
         if form.is_valid():
             code = request.session['verification_code']
-            if code == form.cleaned_data['code']:
-                user = User(request.session.get('user_info'))
+            if code == form['otp_code'].value():
+                print(request.session['user_info']['username'])
+                user = User(username=request.session['user_info']['username'],
+                            password=request.session['user_info']['password'],
+                            phone=request.session['user_info']['phone'])
+                print(user.is_staff)
                 user.save()
                 login(request=request, user=user)
-                return redirect('HomeView')
+                return redirect('home')
             else:
                 messages.error(request, 'Wrong code!')
-                return redirect('VerifyView')
+                return redirect('verify')
         else:
             messages.error(request, 'Code field should be filled!')
-            return redirect('VerifyView')
+            return redirect('verify')
 
 
 class LoginView(View):
@@ -79,6 +89,10 @@ class LoginView(View):
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
+        """
+        I did not use authenticate! tried to handle it by myself, I know how it works.
+        """
+        # user = authenticate(request, username=username, password=password)
         try:
             res = User.objects.get(username=username)
         except User.DoesNotExist:
@@ -93,7 +107,20 @@ class LoginView(View):
         else:
             if password == res.password:
                 login(request=request, user=res)
-                return redirect('HomeView')
+                return redirect('home')
             else:
                 messages.error(request, 'Password is incorrect!')
                 return redirect('login')
+
+
+class LogOutView(View):
+    def get(self, request):
+        return render(request, 'logout.html')
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            logout(request)
+            return redirect('login')
+        else:
+            messages.error(request, 'You are not logged in!')
+            redirect('login')
