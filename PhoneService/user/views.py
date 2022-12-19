@@ -89,9 +89,11 @@ class LoginView(View):
     def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
+
         """
         I did not use authenticate! tried to handle it by myself, I know how it works.
         """
+
         # user = authenticate(request, username=username, password=password)
         try:
             res = User.objects.get(username=username)

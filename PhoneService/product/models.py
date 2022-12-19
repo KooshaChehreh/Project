@@ -7,6 +7,17 @@ from django.core.validators import MinLengthValidator, MaxLengthValidator
 from .validatiors import validate_discount
 
 
+class Category(BaseModel):
+    name = models.CharField(max_length=100, null=False)
+    parent_id = models.CharField(max_length=100, null=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+
 class Product(BaseModel):
     imei1 = models.BigIntegerField(validators=[MaxLengthValidator(13), MinLengthValidator(13)], unique=True,
                                    primary_key=True, null=False, blank=False)
@@ -19,7 +30,8 @@ class Product(BaseModel):
 
 
 class ProductGuarantee(BaseModel):
-    guarantee_code = models.BigIntegerField(validators=[MaxLengthValidator(12), MinLengthValidator(12)], null=True, default=0)
+    guarantee_code = models.BigIntegerField(validators=[MaxLengthValidator(12), MinLengthValidator(12)], null=True,
+                                            default=0)
     guarantee_duration = models.DateTimeField(null=True)
     guarantee_start_date = models.DateTimeField(null=True)
     guarantee_end_date = models.DateTimeField(null=True)
@@ -44,6 +56,7 @@ class ProductService(BaseModel):
     description = models.TextField(null=True)
     guarantee_support = models.BooleanField(null=False, blank=False)
     discount = models.OneToOneField(ServiceDiscount, on_delete=models.CASCADE, null=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.service_name}'
