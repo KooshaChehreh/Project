@@ -1,3 +1,4 @@
+import time
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import UserForm, OtpForm, LoginForm
@@ -25,6 +26,7 @@ class RegisterView(View):
                 return redirect('register')
             else:
                 request.session['verification_code'] = generateOTP()
+                request.session['ver_time'] = time.time()
                 request.session['user_info'] = {
                     'username': user['username'].value(),
                     'password': user['password1'].value(),
@@ -63,19 +65,25 @@ class VerifyView(View):
     def post(self, request):
         form = OtpForm(request.POST)
         if form.is_valid():
-            code = request.session['verification_code']
-            if code == form['otp_code'].value():
-                print(request.session['user_info']['username'])
-                user = User(username=request.session['user_info']['username'],
-                            password=request.session['user_info']['password'],
-                            phone=request.session['user_info']['phone'])
-                print(user.is_staff)
-                user.save()
-                login(request=request, user=user)
-                return redirect('home')
+            if time.time() - request.session['ver_time'] < 120:
+                code = request.session['verification_code']
+                if code == form['otp_code'].value():
+                    print(request.session['user_info']['username'])
+                    user = User(username=request.session['user_info']['username'],
+                                password=request.session['user_info']['password'],
+                                phone=request.session['user_info']['phone'])
+                    user.save()
+                    messages.success(request, 'you have registered successfully')
+                    login(request=request, user=user)
+                    return redirect('home')
+                else:
+                    messages.add_message(request, messages.ERROR, 'Wrong code!')
+                    form = OtpForm()
+                    return render(request, 'verify.html', {'form': form})
             else:
-                messages.error(request, 'Wrong code!')
-                return redirect('verify')
+                messages.warning(request, 'Code was expired!')
+                form = OtpForm()
+                return render(request, 'verify.html', {'form': form})
         else:
             messages.error(request, 'Code field should be filled!')
             return redirect('verify')
@@ -126,3 +134,4 @@ class LogOutView(View):
         else:
             messages.error(request, 'You are not logged in!')
             redirect('login')
+

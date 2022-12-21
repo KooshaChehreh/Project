@@ -9,7 +9,7 @@ from .validatiors import validate_discount
 
 class Category(BaseModel):
     name = models.CharField(max_length=100, null=False)
-    parent_id = models.CharField(max_length=100, null=True)
+    parent_id = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -55,7 +55,7 @@ class ProductService(BaseModel):
     service_name = models.CharField(max_length=100, null=False)
     description = models.TextField(null=True)
     guarantee_support = models.BooleanField(null=False, blank=False)
-    discount = models.OneToOneField(ServiceDiscount, on_delete=models.CASCADE, null=True)
+    discount = models.OneToOneField(ServiceDiscount, on_delete=models.CASCADE, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):

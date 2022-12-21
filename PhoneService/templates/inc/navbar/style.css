@@ -34,3 +34,7 @@
     text-decoration: none;
 }
 
+.dropdown-item{
+background-color: lightslategray;
+color: #fff;
+}
