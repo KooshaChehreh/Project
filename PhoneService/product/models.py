@@ -5,6 +5,7 @@ from core.models import BaseModel
 from user.models import User
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from .validatiors import validate_discount
+from django.urls import reverse
 
 
 class Category(BaseModel):
@@ -19,7 +20,7 @@ class Category(BaseModel):
 
 
 class Product(BaseModel):
-    imei1 = models.BigIntegerField(validators=[MaxLengthValidator(13), MinLengthValidator(13)], unique=True,
+    imei1 = models.BigIntegerField(validators=[MaxLengthValidator(13), MinLengthValidator(1)], unique=True,
                                    primary_key=True, null=False, blank=False)
     brand = models.CharField(max_length=100, null=False, blank=False)
     model = models.CharField(max_length=100, null=False, blank=False)
@@ -60,3 +61,6 @@ class ProductService(BaseModel):
 
     def __str__(self):
         return f'{self.service_name}'
+
+    def get_absolute_url(self):
+        return reverse('service_detail', args=[self.pk, ])

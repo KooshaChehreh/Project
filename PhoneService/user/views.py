@@ -70,8 +70,8 @@ class VerifyView(View):
                 if code == form['otp_code'].value():
                     print(request.session['user_info']['username'])
                     user = User(username=request.session['user_info']['username'],
-                                password=request.session['user_info']['password'],
                                 phone=request.session['user_info']['phone'])
+                    user.set_password(request.session['user_info']['password'])
                     user.save()
                     messages.success(request, 'you have registered successfully')
                     login(request=request, user=user)

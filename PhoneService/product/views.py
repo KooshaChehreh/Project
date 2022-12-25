@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views import View
 from django.views.generic import ListView, DetailView
 from .models import Category, ProductService
+from .forms import AddToCartForm
+from django.shortcuts import get_object_or_404
 
 
 class CategoryListView(ListView):
@@ -32,5 +33,16 @@ class TabletServiceListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(TabletServiceListView, self).get_context_data(**kwargs)
         context['temp'] = 'This is just some data to use Get Context'
+        return context
+
+
+class ServiceDetailView(DetailView):
+    model = ProductService
+    template_name = 'servicedetail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceDetailView, self).get_context_data(**kwargs)
+        context['form'] = AddToCartForm()
+        context['service'] = get_object_or_404(ProductService, pk=self.kwargs['pk'])
         return context
 

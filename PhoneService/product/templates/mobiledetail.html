@@ -12,7 +12,9 @@
                 <div class="card text-center">
                     <div class="card-header font-weight-bold" id="border">
                         {% for service in mobile_service_list %}
-                            <h3 class="">{{ service.service_name }}</h3>
+                            <h3 class="">
+                                <a class="text-decoration-none text-white-50" href="{{ service.get_absolute_url }}">{{ service.service_name }}</a>
+                            </h3>
 
                             <p class="">{{ service.description }}</p>
 

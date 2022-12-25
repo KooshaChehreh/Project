@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-    <link rel="stylesheet" href="{% static 'css/laptopservice.css' %}">
+    <link rel="stylesheet" href="{% static 'css/servicedetail.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,9 +11,9 @@
             <div class="d-flex justify-content-around">
                 <div class="card text-center">
                     <div class="card-header font-weight-bold" id="border">
-                        {% for service in laptop_service_list %}
+
                             <h3 class="">
-                            <a class="text-decoration-none text-white-50" href="{{ service.get_absolute_url }}">{{ service.service_name }}</a>
+                                {{ service.service_name }}
                             </h3>
 
                             <p class="">{{ service.description }}</p>
@@ -22,9 +22,15 @@
                             {% if service.guarantee_support %}
                                 <p class="">Guarantee supports this repair.</p>
                             {% endif %}
-                            <p class=""> ----------------------- </p>
-                        {% endfor %}
 
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                    <p class="label">{{ form.quantity.label }}</p>
+                                     <p>{{ form.quantity }}</p>
+                                </div>
+                            <button type="submit" class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm">Add to cart</button>
+                        </form>
                     </div>
                 </div>
             </div>
