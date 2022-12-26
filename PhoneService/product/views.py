@@ -42,14 +42,15 @@ class ServiceDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ServiceDetailView, self).get_context_data(**kwargs)
-        context['form'] = AddToCartForm()
+        context['form'] = AddToCartForm(user=self.request.user)
         context['service'] = get_object_or_404(ProductService, pk=self.kwargs['pk'])
         return context
 
     def post(self, request, *args, **kwargs):
         form = AddToCartForm(request.POST)
         if form.is_valid():
-            if not request.session['cart']:
+            print('valid form')
+            if request.session['cart']:
                 request.session['cart'] = {
                     'service_pk': self.kwargs['pk'],
                     'quantity': form['quantity'].value()
@@ -59,7 +60,9 @@ class ServiceDetailView(DetailView):
                     'service_pk': self.kwargs['pk'],
                     'quantity': form['quantity'].value()
                 })
-        return redirect('order_item')
+        else:
+            print(form.errors)
+        return redirect('order_items')
 
 
 class AddUserProduct(View):
@@ -89,3 +92,4 @@ class ProductListView(ListView):
         username = self.request.user.username
         query = Product.objects.filter(user__username=username)
         return query
+
