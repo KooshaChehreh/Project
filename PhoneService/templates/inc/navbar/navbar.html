@@ -109,6 +109,8 @@
     <div class="">
         {% if request.user.is_authenticated %}
             <a href="http://127.0.0.1:8000/user/logout" class="link-secondary p-2" id="login">Logout</a>
+            <a href="#" class="link-secondary p-2" id="login">Cart</a>
+            <a href="http://127.0.0.1:8000/category/add_product" class="link-secondary p-2" id="login">Your Devices</a>
         {% else %}
             <a href="http://127.0.0.1:8000/user/" class="link-secondary p-2" id="login">Login</a>
             <a href="http://127.0.0.1:8000/user/register/" class="link-secondary p-2" id="register">Register</a>

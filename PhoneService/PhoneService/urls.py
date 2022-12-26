@@ -24,6 +24,7 @@ urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('user/', include('user.urls')),
     path('category/', include('product.urls')),
+    path('order/', include('order.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import Category, ProductService
-from .forms import AddToCartForm
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, View
+from .models import Category, ProductService, Product
+from .forms import AddToCartForm, ProductForm
 from django.shortcuts import get_object_or_404
 
 
@@ -46,3 +46,46 @@ class ServiceDetailView(DetailView):
         context['service'] = get_object_or_404(ProductService, pk=self.kwargs['pk'])
         return context
 
+    def post(self, request, *args, **kwargs):
+        form = AddToCartForm(request.POST)
+        if form.is_valid():
+            if not request.session['cart']:
+                request.session['cart'] = {
+                    'service_pk': self.kwargs['pk'],
+                    'quantity': form['quantity'].value()
+                }
+            else:
+                request.session['cart'].update({
+                    'service_pk': self.kwargs['pk'],
+                    'quantity': form['quantity'].value()
+                })
+        return redirect('order_item')
+
+
+class AddUserProduct(View):
+    def get(self, request, *args, **kwargs):
+        form = ProductForm()
+        return render(request, 'product.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            product = Product(
+                imei1=form['imei1'].value(),
+                brand=form['brand'].value(),
+                model=form['model'].value(),
+                user=request.user
+            )
+            product.save()
+        return redirect('product_list')
+
+
+class ProductListView(ListView):
+    model = Product
+    context_object_name = 'product_list'
+    template_name = 'productlist.html'
+
+    def get_queryset(self):
+        username = self.request.user.username
+        query = Product.objects.filter(user__username=username)
+        return query

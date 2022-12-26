@@ -68,7 +68,6 @@ class VerifyView(View):
             if time.time() - request.session['ver_time'] < 120:
                 code = request.session['verification_code']
                 if code == form['otp_code'].value():
-                    print(request.session['user_info']['username'])
                     user = User(username=request.session['user_info']['username'],
                                 phone=request.session['user_info']['phone'])
                     user.set_password(request.session['user_info']['password'])
@@ -98,24 +97,18 @@ class LoginView(View):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        """
-        I did not use authenticate! tried to handle it by myself, I know how it works.
-        """
-
-        # user = authenticate(request, username=username, password=password)
         try:
             res = User.objects.get(username=username)
         except User.DoesNotExist:
             res = None
         if res is None:
-            print('res is none')
             messages.error(request, 'You do not have an account! Register please.')
-            print('wtf')
             return redirect('login')
         # elif res['suspend']:
         #     pass
         else:
-            if password == res.password:
+            user = authenticate(request, username=username, password=password)
+            if user.is_authenticated:
                 login(request=request, user=res)
                 return redirect('home')
             else:

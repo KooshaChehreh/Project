@@ -20,11 +20,14 @@ class Category(BaseModel):
 
 
 class Product(BaseModel):
+    brand_choice = (('Iphone', 'Iphone'), ('Samsung', 'Samsung'), ('Xiaomi', 'Xiaomi'))
+
     imei1 = models.BigIntegerField(validators=[MaxLengthValidator(13), MinLengthValidator(1)], unique=True,
-                                   primary_key=True, null=False, blank=False)
+                                   primary_key=True, null=False, blank=False, choices=brand_choice)
     brand = models.CharField(max_length=100, null=False, blank=False)
     model = models.CharField(max_length=100, null=False, blank=False)
     image = models.ImageField(null=True, upload_to='product/%Y/%m/%d')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return f'{self.brand} ({self.model})'
