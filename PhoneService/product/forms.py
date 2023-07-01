@@ -1,26 +1,30 @@
 from django import forms
 from .models import Product
+from order.models import Station
 
 
 class AddToCartForm(forms.Form):
 
-    """kwargs.pop removes the key and returns the value if exists!"""
-
-    product = forms.ChoiceField(label='Device', choices=(('S', 'Small'), ('M', "Medium")))
-    quantity = forms.IntegerField(label='Quantity', widget=forms.NumberInput(attrs={'class': 'qty'}))
-
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
+        self.request = kwargs.pop('request', None)
         super(AddToCartForm, self).__init__(*args, **kwargs)
         try:
-            prod_list = Product.objects.filter(user__username=self.user.username)
+            prod_list = Product.objects.filter(user__username=self.request.user)
+            station_list = Station.objects.all()
             self.CHOICES = []
+            self.station = []
             for product in prod_list:
                 self.CHOICES.append((f'{product.brand}', f'{product.brand}'))
-            self.fields['product'].choices = (('S', 'Small'), ('M', "Medium"))
-            print(tuple(self.CHOICES))
+            for station in station_list:
+                self.station.append((f'{station.name}', f'{station.name}'))
+            self.fields['product'].choices = tuple(self.CHOICES)
+            self.fields['station'].choices = tuple(self.station)
         except AttributeError:
             pass
+
+    product = forms.ChoiceField(choices=(), label='Device')
+    station = forms.ChoiceField(choices=(), label='Station')
+    quantity = forms.IntegerField(label='Quantity', widget=forms.NumberInput(attrs={'class': 'qty'}))
 
 
 class ProductForm(forms.Form):

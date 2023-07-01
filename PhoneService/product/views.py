@@ -1,8 +1,13 @@
+import json
+
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, View
 from .models import Category, ProductService, Product
+from order.models import Order
 from .forms import AddToCartForm, ProductForm
+from order.models import Station
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class CategoryListView(ListView):
@@ -42,23 +47,33 @@ class ServiceDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ServiceDetailView, self).get_context_data(**kwargs)
-        context['form'] = AddToCartForm(user=self.request.user)
+        context['form'] = AddToCartForm(request=self.request)
         context['service'] = get_object_or_404(ProductService, pk=self.kwargs['pk'])
         return context
 
     def post(self, request, *args, **kwargs):
-        form = AddToCartForm(request.POST)
+        form = AddToCartForm(request.POST, request=self.request)
         if form.is_valid():
-            print('valid form')
-            if request.session['cart']:
+            q = form['station'].value()
+            order = Order(
+                user=self.request.user,
+                station=Station.objects.get(name=q)
+            )
+            if 'cart' not in request.session.keys():
                 request.session['cart'] = {
                     'service_pk': self.kwargs['pk'],
-                    'quantity': form['quantity'].value()
+                    'quantity': form['quantity'].value(),
+                    'device': Product.objects.get(brand=form['product'].value()),
+                    'station': Station.objects.get(name=form['station'].value()),
+                    'order': order
                 }
             else:
                 request.session['cart'].update({
                     'service_pk': self.kwargs['pk'],
-                    'quantity': form['quantity'].value()
+                    'quantity': form['quantity'].value(),
+                    'device': form['product'],
+                    'station': form['station'],
+                    'order': order
                 })
         else:
             print(form.errors)
@@ -66,6 +81,7 @@ class ServiceDetailView(DetailView):
 
 
 class AddUserProduct(View):
+
     def get(self, request, *args, **kwargs):
         form = ProductForm()
         return render(request, 'product.html', {'form': form})
@@ -92,4 +108,3 @@ class ProductListView(ListView):
         username = self.request.user.username
         query = Product.objects.filter(user__username=username)
         return query
-
