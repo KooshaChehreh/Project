@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/logout.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="logout" >
+        <div class="">
+            <div class="card text-center">
+                <div class="card-header font-weight-bold">
+                    Are you sure you want to log out?
+                </div>
+                <div class="card-body">
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                    <button type="submit"
+                            class="btn btn-secondary btn-block text-uppercase m-2 rounded-pill shadow-sm">
+                        Log Out!
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

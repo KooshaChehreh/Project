@@ -1,5 +1,5 @@
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import UserManager, AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
@@ -48,8 +48,8 @@ class BaseModel(models.Model):
         null=True,
         blank=True,
         editable=False,
-        verbose_name="Deleted Datetime",
-        help_text="This is deleted datetime"
+        verbose_name="Deleted Datetime ",
+        help_text="This is deleted datetime "
     )
 
     restored_at = models.DateTimeField(

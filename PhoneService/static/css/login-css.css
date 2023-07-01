@@ -1,0 +1,35 @@
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('../user/images/loginBg.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+
+#id_username {
+  border-radius: 25px 25px;
+  background: aliceblue;
+  padding: 20px;
+  width: 400px;
+  height: 45px;
+
+}
+
+#id_password {
+  border-radius: 25px 25px;
+  background: aliceblue;
+  padding: 20px;
+  width: 400px;
+  height: 45px;
+
+}
