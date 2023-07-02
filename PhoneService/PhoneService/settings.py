@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-gh8m_-2#f$d=kh+@e@(!uq2ma^a*^z285*%e&t9a!lc9@%q0=h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["django-test-koosha.iran.liara.run"]
 
 # Application definition
 
