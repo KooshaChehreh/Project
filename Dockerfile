@@ -1,11 +1,12 @@
 FROM python:3.9
 
-WORKDIR /phoneservice
+WORKDIR /usr/src/app
 
-COPY ../requirements.txt ./requirements.txt
+COPY ./requirements.txt ./requirements.txt
 
 COPY . .
 
 RUN pip install -r requirements.txt
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN  python3 PhoneService/manage.py migrate
+CMD ["python3", "PhoneService/manage.py", "runserver", "0.0.0.0:80"]
