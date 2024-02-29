@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/categories.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="category" >
+        <div class="">
+            <div class="card text-center">
+                {% for category in category_list %}
+                <div class="card-header font-weight-bold">
+                <a href="http://127.0.0.1:8000/category/{{ category.name }}" class="link-secondary p-2" id="login">{{ category.name }}</a>
+
+                </div>
+{#                <div class="card-body">#}
+{#                    #}
+{#                </div>#}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/servicedetail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="">
+
+        <div class="category">
+            <div class="d-flex justify-content-around">
+                <div class="card text-center">
+                    <div class="card-header font-weight-bold" id="border">
+
+                        <h3 class="">
+                            {{ service.service_name }}
+                        </h3>
+
+                        <p class="">{{ service.description }}</p>
+
+
+                        {% if service.guarantee_support %}
+                            <p class="">Guarantee supports this repair.</p>
+                        {% endif %}
+
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <p class="label">{{ form.quantity.label }}</p>
+                                <p>{{ form.quantity }}</p>
+                            </div>
+                            <div class="d-flex justify-content-around form-group mb-3">
+                                <div class="">
+                                <p class="label">{{ form.product.label }}</p>
+                                <p>{{ form.product }}</p>
+                                    </div>
+                                <div class="">
+                                <p class="label">{{ form.station.label }}</p>
+                                <p>{{ form.station }}</p>
+                                    </div>
+                            </div>
+                            <button type="submit"
+                                    class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm">Add to
+                                cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    {#        <div class="d-flex justify-content-around">#}
+    {#        <div class="">#}
+    {#        {% for service in mobile_service_list %}#}
+    {#            <h3 class="">{{ service.service_name }}</h3>#}
+    {#        <p class="">{{ service.description }}</p>#}
+    {#        {% if service.guarantee_support %}#}
+    {#                       <p class="">Guarantee supports this repair.</p>#}
+    {#              {% endif %}#}
+    {#        {% endfor %}#}
+    {#        </div>#}
+    {#        </div>#}
+{% endblock %}

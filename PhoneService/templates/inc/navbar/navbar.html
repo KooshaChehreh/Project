@@ -1,0 +1,120 @@
+<style class="">
+    #dropdownMenu1:hover {
+        color: white !important;
+        border-color: gray;
+    }
+
+    #dropdownMenu2:hover {
+        color: white !important;
+        border-color: gray;
+    }
+
+    #dropdownMenu3:hover {
+        color: white !important;
+        border-color: gray;
+    }
+
+    #dropdownMenu4:hover {
+        color: white !important;
+        border-color: gray;
+    }
+
+    #login:hover {
+        color: white !important;
+    }
+
+    #login {
+        text-decoration: none;
+    }
+
+    #register:hover {
+        color: white !important;
+    }
+
+    #register {
+        text-decoration: none;
+    }
+</style>
+
+<nav class="d-flex justify-content-between navbar navbar-expand-lg px-5 bg-dark p-4">
+    <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-left">
+            <div class="container-fluid d-flex justify-content-center">
+                <p class="text-light m-2">GuarantMee</p>
+            </div>
+            <div class="pt-2" id="home">
+                <a href="http://127.0.0.1:8000/" class="link-secondary p-2" id="login">Home</a>
+            </div>
+            <div class="dropdown ">
+                <button class="btn btn-basic dropdown-toggle text-muted" type="button" id="dropdownMenu1"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Services
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li>
+                        <a href="http://127.0.0.1:8000/category" class="link-secondary p-2 dropdown-item text-center"
+                           style="text-decoration: none">Repair Categories</a>
+
+                    </li>
+                    <li>
+                        <a href="#" class="link-secondary p-2 dropdown-item text-center" style="text-decoration: none">Guarantee
+                            your device</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-basic dropdown-toggle text-secondary" type="button" id="dropdownMenu2"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Branch
+                </button>
+                <ul class="dropdown-menu " aria-labelledby="dropdownMenu2">
+                    <li>
+                        <a href="#" class="link-secondary p-2 dropdown-item text-center" style="text-decoration: none">Our
+                            available branches</a>
+
+                    </li>
+                    <li>
+                        <a href="#" class="link-secondary p-2 dropdown-item text-center" style="text-decoration: none">Apply to be our branch</a>
+
+                    </li>
+                </ul>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-basic dropdown-toggle text-secondary" type="button" id="dropdownMenu3"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    About us
+                </button>
+                <ul class="dropdown-menu " aria-labelledby="dropdownMenu3">
+                    <li>
+                        <a href="#" class="link-secondary p-2 dropdown-item text-center" style="text-decoration: none">About GuarantMee</a>
+                    </li>
+                    <li>
+                        <a href="#" class="link-secondary p-2 dropdown-item text-center" style="text-decoration: none">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="">
+                <button class="btn btn-basic text-secondary" type="button" id="dropdownMenu4"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    News
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="">
+        {% if request.user.is_authenticated %}
+            <a href="http://127.0.0.1:8000/user/logout" class="link-secondary p-2" id="login">Logout</a>
+            <a href="#" class="link-secondary p-2" id="login">Cart</a>
+            <a href="http://127.0.0.1:8000/category/add_product" class="link-secondary p-2" id="login">Your Devices</a>
+        {% else %}
+            <a href="http://127.0.0.1:8000/user/" class="link-secondary p-2" id="login">Login</a>
+            <a href="http://127.0.0.1:8000/user/register/" class="link-secondary p-2" id="register">Register</a>
+        {% endif %}
+    </div>
+
+</nav>
